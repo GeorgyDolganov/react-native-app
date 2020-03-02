@@ -12,6 +12,7 @@ import {
   SafeAreaView,
   StyleSheet,
   FlatList,
+  Button,
   Text,
   StatusBar,
 } from 'react-native';
@@ -25,16 +26,24 @@ import BidInput from './components/BidInput';
 
 const App: () => React$Node = () => {
   const [masterBids, setMasterBids] = useState ([]);
+  const [isAddMode, setIsAddMode] = useState (false);
 
   const addBidHandler = bidTitle => {
     setMasterBids(currentBids => [
       ...currentBids, 
-      {key: Math.random().toString(), value: bidTitle }
+      {id: Math.random().toString(), value: bidTitle }
     ]);
+    setIsAddMode(false);
   }
   
   const removeBidHandler = bidId => {
+    setMasterBids(currentBids => {
+      return currentBids.filter((bid) => bid.id !== bidId);
+    })
+  }
 
+  const cancelAddBidHandler = () => {
+    setIsAddMode(false);
   }
 
   return (
@@ -45,9 +54,17 @@ const App: () => React$Node = () => {
           <Text style={styles.logo}>GMMobile</Text>
         </View>
         <View style={styles.content}>
-          <BidInput onAddBid={addBidHandler} />
-          <FlatList data={masterBids} renderItem={itemData => (
-            <BidItem id={itemData.item.key} title={itemData.item.value}/>
+          <Button title="Добавить заявку" onPress={() => setIsAddMode(true)} />
+          <BidInput visible={isAddMode} onAddBid={addBidHandler} onCancel={cancelAddBidHandler} />
+          <FlatList  
+            keyExtractor={(item, index) => item.id}
+            data={masterBids} 
+            renderItem={itemData => (
+              <BidItem 
+                id={itemData.item.id} 
+                title={itemData.item.value} 
+                onDelete={removeBidHandler}
+              />
           )} />
         </View>
       </SafeAreaView>

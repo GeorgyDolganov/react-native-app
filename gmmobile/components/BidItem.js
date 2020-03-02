@@ -4,7 +4,7 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const BidItem = props => {
     return (
-        <TouchableOpacity activeOpacity={0.5} onPress={props.onDelete}>
+        <TouchableOpacity activeOpacity={0.5} onPress={props.onDelete.bind(this, props.id)}>
             <View style={styles.bid}>
                 <Text>{props.id}-{props.title}</Text>
             </View>
@@ -14,11 +14,11 @@ const BidItem = props => {
 
 const styles = StyleSheet.create({
     bid: {
-        borderColor: Colors.light,
+        borderColor: Colors.primary,
         padding: 10,
-        marginBottom: 5,
-        borderWidth: 1,
-        borderRadius: 5,
+        marginTop: 15,
+        borderWidth: 1.5,
+        borderRadius: 2.5,
     }
 });
 
