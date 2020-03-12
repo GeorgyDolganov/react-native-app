@@ -6,7 +6,8 @@ const BidItem = props => {
     return (
         <TouchableOpacity activeOpacity={0.5} onPress={props.onDelete.bind(this, props.id)}>
             <View style={styles.bid}>
-                <Text>{props.id}-{props.title}</Text>
+                <Text style={styles.number}>{props.id}</Text>
+                <Text style={styles.name}>{props.title}</Text>
             </View>
         </TouchableOpacity>
     );
@@ -14,11 +15,15 @@ const BidItem = props => {
 
 const styles = StyleSheet.create({
     bid: {
-        borderColor: Colors.primary,
+        borderColor: '#335C67',
         padding: 10,
-        marginTop: 15,
-        borderWidth: 1.5,
-        borderRadius: 2.5,
+        marginBottom: 15,
+        borderWidth: 2,
+        borderRadius: 3,
+    },
+    name: {
+        fontSize: 22,
+        fontWeight: '700',
     }
 });
 

@@ -24,8 +24,8 @@ const BidInput = props => {
                     value = {enteredBid}
                 />
                 <View style={styles.addButtonContainer}>
-                    <Button title="Отменить" color="red" onPress= {props.onCancel}/>
-                    <Button title="Добавить" onPress = {addBidHandler} />
+                    <Button title="Отменить" color="#BE2223" onPress= {props.onCancel}/>
+                    <Button title="Добавить" color="#335C67"  onPress = {addBidHandler} />
                 </View>
             </View>
         </Modal>
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },  
     addInput: {
-        borderBottomColor: Colors.primary,
+        borderBottomColor: '#335C67',
         borderBottomWidth: 1,
         paddingVertical: 3,
         marginBottom: 20,

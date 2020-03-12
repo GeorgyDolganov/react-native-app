@@ -1,91 +1,94 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
+import 'react-native-gesture-handler';
 import React, { useState } from 'react';
 import {
   View,
-  SafeAreaView,
   StyleSheet,
-  FlatList,
-  Button,
-  Text,
-  StatusBar,
+  Button
 } from 'react-native';
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 
-import BidItem from './components/BidItem';
-import BidInput from './components/BidInput';
+import BidScreen from './app/screens/BidScreen';
+import Profile from './app/screens/Profile';
+import Login from './app/screens/Login';
+import Registration from './app/screens/Registration';
 
-const App: () => React$Node = () => {
-  const [masterBids, setMasterBids] = useState ([]);
-  const [isAddMode, setIsAddMode] = useState (false);
+const Stack = createStackNavigator();
 
-  const addBidHandler = bidTitle => {
-    setMasterBids(currentBids => [
-      ...currentBids, 
-      {id: Math.random().toString(), value: bidTitle }
-    ]);
-    setIsAddMode(false);
-  }
-  
-  const removeBidHandler = bidId => {
-    setMasterBids(currentBids => {
-      return currentBids.filter((bid) => bid.id !== bidId);
-    })
-  }
-
-  const cancelAddBidHandler = () => {
-    setIsAddMode(false);
-  }
+function App() {
 
   return (
-    <>
-      <StatusBar barStyle="dark" />
-      <SafeAreaView>
-        <View style={styles.header}>
-          <Text style={styles.logo}>GMMobile</Text>
-        </View>
-        <View style={styles.content}>
-          <Button title="Добавить заявку" onPress={() => setIsAddMode(true)} />
-          <BidInput visible={isAddMode} onAddBid={addBidHandler} onCancel={cancelAddBidHandler} />
-          <FlatList  
-            keyExtractor={(item, index) => item.id}
-            data={masterBids} 
-            renderItem={itemData => (
-              <BidItem 
-                id={itemData.item.id} 
-                title={itemData.item.value} 
-                onDelete={removeBidHandler}
-              />
-          )} />
-        </View>
-      </SafeAreaView>
-    </>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="home">
+        <Stack.Screen 
+          name="bidScreen" 
+          component={BidScreen} 
+          options={{
+            title: 'Гормастер',
+            headerStyle: {
+              backgroundColor: '#BE2223',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}  
+        />
+        <Stack.Screen 
+          name="profile" 
+          component={Profile} 
+          options={{
+            title: 'Мой профиль',
+            headerStyle: {
+              backgroundColor: '#540B0E',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        />
+        <Stack.Screen 
+          name="login" 
+          component={Login} 
+          options={{
+            title: 'Войти',
+            headerStyle: {
+              backgroundColor: '#BE2223',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        />
+        <Stack.Screen 
+          name="signin" 
+          component={Registration} 
+          options={{
+            title: 'Зарегестрироваться',
+            headerStyle: {
+              backgroundColor: '#540B0E',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: Colors.primary,
-    padding: 30,
-  },
-  logo: {
-    color: Colors.white,
-    fontWeight: "bold",
-    fontSize: 28,
-  },
   content: {
-    padding: 30,
-  },
-  row: {
+    padding: 15,
   },
 });
 
